@@ -1,0 +1,83 @@
+\documentclass[11pt,wide]{mwart}
+
+\usepackage[T1]{fontenc}
+% Można też użyć UTF-8
+\usepackage[utf8]{inputenc}
+
+% Język
+\usepackage[polish]{babel}
+% \usepackage[english]{babel}
+
+% Rózne przydatne paczki:
+% - znaczki matematyczne
+\usepackage{amsmath, amsfonts}
+% - wcięcie na początku pierwszego akapitu
+\usepackage{indentfirst}
+% - komenda \url
+\usepackage{hyperref}
+% - dołączanie obrazków
+\usepackage{graphics}
+% - szersza strona
+\usepackage[nofoot,hdivide={2cm,*,2cm},vdivide={2cm,*,2cm}]{geometry}
+\frenchspacing
+
+
+\usepackage{hyperref}
+\usepackage{url}
+
+\newtheorem{tw}{Twierdzenie}
+\newtheorem{alg}{Algorytm}
+
+\date{Wrocław, \today}
+
+\title{\Large\textbf{Podstawowe umiejętności w \LaTeX} }
+\author{Franciszek Zdobylak \thanks{\textit{E-mail}: \texttt{310313@uwr.edu.pl}}}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Umiejętność tworzenia działów}
+Umiejętność tworzenia działów jest jedną z podstawowych umiejętnośći potrzebnych do pisania
+sensownych prac. W ten sposób porządkujemy to co chcemy przekazać czytelnikowi. 
+W tym rozdziale przedstawię parę sposobów na tworzenie podrozdziałów.
+
+\subsection{Rozdział z numerem}
+Rozdziały z mumerem pomagają w odnalezieniu się podczas czytania.
+\subsection*{Rozdział bez numeru}
+Rozdziały bez numerów pomagają nam zwrócić uwagę na ważne zagadnienia związane z omawianym tematem.
+\subsubsection{Podpodrozdział}
+Takie zagnieżdżone rozdziały przydają się gdy chcemy bardziej zgłębić dany temat.
+
+\section{Notacja matematyczna}
+
+Notacja matematyczna bardzo przydaje się podczas naszych studiów. Na przykład do zapisania
+twierdzenia Taylora.
+
+\begin{tw}["Twierdzenie Taylora"]
+  Niech $Y$ będzie przestrzenią unormowaną oraz $f: [a,b] \rightarrow Y$ będzie funkcją
+  $(n+1)$ razy różniczkowalną na przedziale $[a,b]$ w sposób ciągły. 
+  Wówczas dla każdego punktu $x$ z przedziału $(a,b)$ spełniony jest wzór
+  $$ f(x) = f(a) + \frac{x - a}{1!} f^{(1)}(a) + \frac{(x-a)^2}{2!} f^{(2)}(a) + \dots
+    + \frac{(x-a)^n}{n!} f^{(n)}(a) + R_n(x, a)$$
+  gdzie $f^{(k)}$ jest pochodną k-tego stopnia funkcji $f$, a $R_n(x,a)$ spełnia warunek
+  $$ \lim_{x\rightarrow a}{\frac{R_n(x,a)}{(x - a)^n}} = 0$$
+\end{tw}
+
+\section{Tabele}
+Kolejnym ważnym narzędziem przydatnym przy pisaniu naukowych artykułów są tabele.
+\begin{center}
+\begin{tabular}{|c|r|}
+  \hline
+  \textbf{Nazwa} & \textbf{Symbol}\\
+  \hline
+  Jeden & $1$\\
+  \hline
+  Dwa & $2$\\
+  \hline
+  Trzy & $3$\\
+  \hline
+\end{tabular}
+\end{center}
+\end{document}

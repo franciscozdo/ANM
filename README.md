@@ -1,0 +1,4 @@
+# Analiza numeryczna
+
+* pracownie
+* listy 
