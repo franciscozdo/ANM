@@ -1,0 +1,173 @@
+9a10
+> %\pagestyle{empty}
+27c28
+< $$ L(x) = \sum_{i=0}^{n} f_i l_i(x) 
+---
+> $$ p(x) = \sum_{i=0}^{n} f_i L_i(x) 
+29c30
+< l_i(x) = \prod_{j=0,j\neq i}^n \frac{x - x_j}{x_i - x_j}$$
+---
+> L_i(x) = \prod_{j=0,j\neq i}^n \frac{x - x_j}{x_i - x_j}$$
+31c32
+< Widać w niej, że wielomian $ l_i(x) $ przyjmuje wartość $ 1 $ dla $ x = x_i $
+---
+> Widać w niej, że wielomian $ L_i(x) $ przyjmuje wartość $ 1 $ dla $ x = x_i $
+35,36c36
+< $$ L(x) = \sum_{i=0}^n w_if_i \prod_{j=0, j \neq i} ^n (x - x_j) 
+< \text{\hspace{1cm}, gdzie } w_i = \frac{1}{\displaystyle\prod_{j=0, j\neq i}^{n}(t_j - t_i)}$$
+---
+> $$ p(x) = \sum_{i=0}^n w_if_i \prod_{j=0, j \neq i} ^n (x - x_j)$$
+38,91c38,44
+< Współczynniki $w_i$ można wyliczyć podczas konstruowania wielomianu, dzięki czemu nie trzeba wykonywać
+< dodatkowych mnożeń podczas wyliczania wartości wielomianu. Do ich wyliczenia można zastosować 
+< poniższy algorytm. (Działa on w czasie $O(n^2)$ gdzie $n$ to liczba wspóczynników 
+< do policzenia, czyli liczba wązłów interpolacyjnych.)
+< 
+< \begin{align*}
+<     a_0^{(0)} &= 1, a_k^{(0)} = 0, \qquad k = 1,...,n
+< \end{align*}
+< \begin{align*}
+<     \left. \begin{array}{l}
+<     a_k^{(i)} = a_k^{(i - 1)} / (t_k - t_i)\\
+<     a_i^{(k+1)} = a_i^{(k)} - a_k^{(i)}
+<   \end{array} 
+<   \right\} \qquad i = 1,2,...,n,\quad k = 0,1,...,i-1
+< \end{align*}
+< \begin{align*}
+<     w_i  &= a_i^{(n)}, \qquad i = 0,1,...,n
+< \end{align*}
+< 
+< Warto również zauważyć, że w przypadku gdy interpolujemy wielomian w węzłach równoodległych lub Czebyszewa
+< postać współczynników znacząco sie upraszcza i możemy je policzyć w czasie liniowym ze wzorów:
+< 
+< \[
+<   \begin{minipage}{.35\linewidth}
+<     \centering
+<     W przypadku węzłów równoodległych:
+<     $$ w_i = (-1)^i\binom{n}{i}$$
+<   \end{minipage}
+<   \begin{minipage}{.35\linewidth}
+<     \centering
+<     W przypadku węzłów Czebyszewa:
+<     $$ w_i = (-1)^i\sin{\frac{(2i+1)\pi}{2n+2}}$$
+<   \end{minipage}
+< \]
+< 
+< Mimo iż w trakcie konstruowania wielomianu obliczamy współczynniki $w_i$, to dalej wartość wielomianu
+< jest liczona w czasie kwadratowym. Chcielibyśmy znaleźć sposób, który pozwoli nam to robić szybciej.
+< Z pomocą przychodzi postać barycentryczna wielomianu Lagrange'a. Przedstawię krótkie jej wyprowadzenie.
+< 
+< Niech $$l(x) = (x - x_0) \cdots (x - x_n)$$ 
+< Wtedy $$l_i(x) = l(x)\frac{w_i}{x-x_i}$$
+< W takim razie:
+< $$ L(x) = \sum_{i=0}^{n}f_il_i(x) = \sum_{i=0}^nf_il(x)\frac{w_i}{x-x_i} = 
+<           l(x)\sum_{i=0}^n\frac{w_i}{x-x_i}f_i $$
+< Zauważmy, że 
+< $$ 1 = \sum_{i=0}^nL_i(x) = \sum_{i=0}^n\frac{l(x)w_i}{x-x_i} = l(x)\sum_{i=0}^n\frac{w_i}{x-x_i}$$
+< 
+< Więc
+< $$  L(x) = \frac{p(x)}{1} = 
+< \frac{l\displaystyle(x)\sum_{i=0}^n\frac{w_i}{x-x_i}f_i}{l\displaystyle(x)\sum_{i=0}^n\frac{w_i}{x-x_i}} = 
+< \frac{\displaystyle\sum_{i=0}^n\frac{w_i}{x-x_i}f_i}{\displaystyle\sum_{i=0}^n\frac{w_i}{x-x_i}}$$
+< 
+< W takim razie wzór na postać barycentryczną Lagragne'a wygląda w ten sposób:
+< $$ L(x) = 
+---
+> Można w niej wyliczyć współczynniki $w_i$ podczas konstruowania wielomianu
+> i nie trzeba za każdym razem wykonywać dodatkowych mnożeń, jednak dalej 
+> liczba operacji potrzebnych do wyliczenia wartości wielomianu jest $ O(n^2) $.
+> 
+> Aby uzyskać lepszą złożoność obliczeniową należy wykorzystać postać 
+> barycentryczną. 
+> $$ p(x) = 
+97c50
+< Do wyliczenia wartości wielomianu używając tej postaci potrzebujemy wykonać 
+---
+> Do wyliczenia wartości wielomianu potrzebujemy wykonać 
+102,144d54
+< \section{Trochę o postaci Newtona}
+< Inną postacią wielomianu interpolacyjnego jest postać Newtona. Przedstawia ona się
+< w ten sposób:
+< $$ N(x) = \sum_{i=0}^n a_i \prod_{j = 0}^{i-1}(x - x_j) \text{\hspace{1cm}, gdzie }
+< a_i = f[x_0, x_1, ..., x_i]$$
+< wyrażenie $ f[x_0, ..., x_k] $ nazywane jest ilorazem różnicowym oraz przedstawia 
+< się wzorem:
+< $$ f[x_0, x_1, ..., x_k] = \frac{f[x_0, ..., x_{k-1}] - f[x_1, ..., x_k]}{x_0 - x_k}$$
+< 
+< Do obliczenia współczynników $a_k$ można użyć następującego algorytmu. Jego złożoność jest $O(n^2)$,
+< gdzie $n$ to liczba współczynników do policzenia(liczba węzłów interpolacyjnych).
+< 
+< \begin{verbatim}
+< Dla i = 0,..,n:
+<   a[i] = f(x[i])
+< 
+< Dla i = 1,...n:
+<   Dla k = i,i+1,...,n:
+<     a[k] = (a[k] - a[k-1]) / (x[k] - x[k-1])
+< \end{verbatim}
+< 
+< \section{Błąd interpolacji}
+< W zadaniu na temat interpolacji warto również wspomnieć o błędzie interpolacji. Błąd interpolacji
+< dla wielomianu n-tego stopnia wyraża się wzorem:
+< 
+< \begin{align*}
+<   E = \max_{-1\le x\le 1} |f(x) - L_n(x)| &\le \frac{M_{n+1}P_{n+1}}{(n+1)!}\\
+< M_{n+1} &= \max_{-1 \le x \le 1} |f^(n+1)(x)| \\
+< P_{n+1} &= \max_{-1 \le x \le 1} |p_{n+1}(x)|, \\
+< \quad \text{gdzie } p_{n+1}(x) &= (x - x_0)\cdots(x-x_n)
+< \end{align*}
+< 
+< Można zauważyć, że aby zmniejszyć błąd dla ustalonej funkcji możemy jedynie zmieniać rozłożenie
+< węzłów interpolacji. Zostało udownione, że najlepszym rozkładem węzłów interpolacji są zera 
+< wielmianu Czebyszewa. Wtedy wielomian $p_{n+1}$ wyraża się wzorem:
+< $$ p_{n+1} = 2^{-n}T_{n+1}(x), \quad \text{gdzie $T_{n+1}$ to wielomian Czebyszewa} $$
+< A błąd interpolacji wynosi:
+< $$
+< E = \frac{M_{n+1}}{2^n(n+1)!}
+< $$
+< 
+< 
+< 
+157,179c67
+< Algorytm wyliczania tych współczynników realizuje eliminację Gaussa na równaniu:
+< 
+< $$
+< \begin{pmatrix}
+<   a_0 \\ a_1 \\ a_2 \\ \vdots \\ a_n
+< \end{pmatrix} = 
+< \begin{pmatrix} \displaystyle
+<   \displaystyle\prod_{j=1}^n(t_0 - t_j) & 0 & 0 & \cdots & 0 \\
+<   \displaystyle\prod_{j=2}^n(t_0 - t_j) & \displaystyle\prod_{j=2}^n(t_1 - t_j) & 0 & \cdots & 0\\
+<   \displaystyle\prod_{j=3}^n(t_0 - t_j) & \displaystyle\prod_{j=3}^n(t_1 - t_j) & \displaystyle\prod_{j=3}^n(t_2 - t_j) & \cdots & 0\\
+<   \vdots & \vdots & \vdots & & \vdots \\
+<   (t_0 - t_n) & (t_1 - t_n) & (t_2 - t_n) & \cdots & 0\\
+<   1 & 1 & 1 & \cdots & 1
+< \end{pmatrix}
+< \begin{pmatrix}
+<   \sigma_0\\
+<   \sigma_1\\
+<   \sigma_2\\
+<   \vdots\\
+<   \sigma_n\\
+< \end{pmatrix}
+< $$
+< 
+---
+> \newpage
+212c100
+< również dla funkcji $f_2(x) = \arctan{x}$ oraz $f_3(x) = \frac{\sin{x} + \cos{x} - 1}{x}$ z artykułu.)
+---
+> również dla funkcji $f_2(x) = \arctan{x}$ oraz $f(x) = \frac{\sin{x} + \cos{x} - 1}{x}$ z artykułu.)
+220a109,114
+> \hline \hline
+>      7     &    12      &    17      &    22      &    27      &    32      &    37      &    42      &    47      \\
+> 9.8348e-07 & 1.8200e-04 & 1.4594e-02 & 1.4250e+00 & 2.9382e+02 & 2.2826e+05 & 5.0080e+08 & 4.9340e+11 & 1.1559e+15 \\
+> \hline \hline
+>      9     &    14      &    19      &    24      &    29      &    34      &    39      &    44      &    49      \\
+> 4.8801e-06 & 6.5667e-04 & 6.8670e-02 & 1.4165e+01 & 2.3080e+03 & 6.2959e+06 & 1.2402e+09 & 1.6607e+13 & 3.9871e+17 \\
+223c117
+< \caption{Maksymalna różnica we współczynnikach dwóch wielomianów Newtona (funkcja $f_1$)}
+---
+> \caption{Maksymalna różnica we współczynnikach dwóch wielomianów Newtona}
+242d135
+< \newpage
