@@ -1,0 +1,259 @@
+\documentclass[7pt,landscape]{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{romannum}
+\usepackage{multicol,multirow}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.1in,left=.1in,right=.1in,bottom=.1in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+
+\begin{multicols}{3}
+
+    \setlength{\premulticols}{1pt}
+    \setlength{\postmulticols}{1pt}
+    \setlength{\multicolsep}{1pt}
+    \setlength{\columnsep}{1pt}
+
+    \section{Analiza błędów}
+    $|a - \widetilde{a}| \le \frac{1}{2} \cdot B^{-p}$ -- $\widetilde{a}$ ma $p$
+    cyfr dokładnych. \\
+    Cyfry znaczące -- cyfry dokładne, przed którymi były zera. \\
+
+    \subsection{Precyzja arytmetyki}
+    $u = \frac{1}{2} \cdot 2^{-t}$, $t$ -- liczba bitów mantysy \\
+    $|rd(x) - x| \le 2^{-t - 1} \cdot 2^c$
+
+    \subsection{Twierdzenie 1}
+    dla $|\alpha_j| \le u$, $|p_j| = 1$: $\prod \limits_{j = 1}^{n}(1 + \alpha_j)^{p_j} = 1 + \theta_n$, $|\theta_n| \le
+    \frac{nu}{1 - nu}$, $nu < 1$
+
+    \subsection{Twierdzenie}
+    dla $|\alpha_j| < u$: $\prod \limits_{j = 1}^{n} (1 + \alpha_j) = 1 + \eta_n$, $nu \le
+    0.01$, $|\eta_n| \le 1.01nu$
+
+    \section{Uwarunkowanie zadania}
+
+    \subsection{Wskaźnik uwarunkowania}
+    $C_f(x) = \frac{|xf'(x)|}{|f(x)|}$ -- obliczanie funkcji $f$ w punkcie $x$
+
+    \section{Równania nieliniowe}
+    Błąd w metodzie Newtona: \\
+    $\epsilon_{n + 1} = \frac{1}{2} F''(\eta_n)\epsilon_n^2$ gdy pierwiastek 1
+    krotny, $\eta_n \in (\alpha, x_n)$
+
+    \subsection{Reguła Falsi}
+    to samo co siecznych, ale zawsze wybieramy $x_n$ i $x_{n'}$ tak aby $f(x_n)
+    \cdot f(x_{n'}) < 0$
+
+    \subsection{Schemat Hornera}
+    obliczania $p(x), p'(x), p''(x), p'''(x)$ \\
+    $p(x) = a_n$ \\
+    $p'(x) = p''(x) = p'''(x) = 0$ \\
+    Dla $k = n - 1, \ldots, 0$ \\
+    \hspace{0.5cm}$p'''(x) = 3 \cdot p''(x) + x \cdot p'''(x)$ \\
+    \hspace{0.5cm}$p''(x) = 2 \cdot p'(x) + x \cdot p''(x)$ \\
+    \hspace{0.5cm}$p'(x) = p(x) + xp'(x)$ \\
+    \hspace{0.5cm}$p(x) = a_k + x \cdot p(x)$\\
+    Wynik: $p(x), p'(x), p''(x), p'''(x)$
+
+    \section{Interpolacja}
+
+    \subsection{Postać barycentryczna}
+
+    $L_n(x) = \frac{\sum \limits_{k = 0}^{n} \frac{\sigma_k}{x - x_k} \cdot
+    y_k}{\sum \limits_{k = 0}^{n} \frac{\sigma_k}{x - x_k}}$, $\sigma_k = \prod
+    \limits_{j = 0, j
+    \neq k}^{n} \frac{1}{x_k - x_j}$
+
+    \subsection{Ilorazy różnicowe}
+    
+    $f[x_0, x_1, \ldots, x_{n + 1}] = \frac{1}{(n + 1)!}f^{(n + 1)}(\xi)$
+
+    \subsection{Reszta interpolacji}
+    
+    $f(x) - L_n(x) = f[x, x_0, \ldots, x_n]p_{n + 1}(x) = \frac{1}{(n +
+    1)!}f^{(n + 1)}(\xi_x)p_{n + 1}(x)$, $\max \limits_{-1 \le x \le 1}|f(x) - L_n(x)|
+    \le \frac{M_{n + 1}P_{n + 1}}{(n + 1)!}$, \\
+    dla $-1 \le x \le 1$, $M_{n+1} = \max|f^{(n + 1)}(x)|$, $P_{n + 1} = \max|p_{n + 1}(x)|$
+
+    \subsection{Wielomiany Czebyszewa}
+
+    $T_0 = 1, T_1 = x, T_k = 2x \cdot T_{k - 1} - T_{k - 2}$ \\
+    $T_k = \cos(k \arccos x)$ \\
+    zera wielomianu: $t_j = \cos \frac{2j + 1}{2k} \pi$ \\
+    punkty ekstremalne: $u_j = \cos \frac{j \pi}{k}$ \\
+    współczynnik wiodący: $a_k = 2^{k - 1}$
+
+    \subsection{Algorytm Clenshawa}
+
+    $W(x) = \sum\limits_{k = 1}^{n} c_k T_k(x)$,
+    $B_{n + 2} = B_{n + 1} = 0, B_k = 2xB_{k + 1} - B_{k + 2} + c_k$,
+    $W(x) = \frac{1}{2} (B_0 - B_2)$
+
+    \subsection{Funkcja Sklejana}
+
+    warunki:
+    \begin{itemize}
+      \item[1$^\circ$] $s,s',s''$ -- ciągłe
+      \item[2$^\circ$] na każdym $[x_{k - 1}, x_k]$ $s$ jest wielomianem st $\le 3$
+      \item[3$^\circ$] $s(x_k) = f(x_k)$
+    \end{itemize}
+
+    warianty:
+    \begin{itemize}
+      \item[4$^\circ$n] naturalna: $s''(a) = s''(b) = 0$
+      \item[4$^\circ$c] zupełna: $s'(a) = f'(a), s'(b) = f'(b)$
+      \item[4$^\circ$p] okresowa: $s'(a) = s'(b), s''(a) = s''(b)$
+    \end{itemize}
+
+
+    \section{Aproksymacja średniokwadratowa}
+
+    \subsection{ortogonalizacja Gramma-Schmidta}
+
+    $g_1 = f_1, g_k = f_k - \sum \limits_{i = 1}^{k - 1} \frac{\langle f_k;
+    g_i \rangle}{\langle g_i;
+    g_i \rangle} g_i$
+
+    \subsection{wielomiany standardowe}
+
+    $\{\bar{P_k}\}$ - ortogonalne i współczynnik przy $x^k$ w $\bar{P_k}$ jest
+    $= 1$ \\
+    $\bar{P_0} = 1, \bar{P_1} = x, \bar{P_k} = (x - c_k)\bar{P_{k - 1}} -
+    d_k\bar{P_{k - 2}}$, $c_k = \frac{\langle x\bar{P_{k - 1}}; \bar{P_{k -
+    1}} \rangle}{\langle \bar{P_{k - 1}}; \bar{P_{k - 1} \rangle}}$, $d_k = \frac{\langle \bar{P_{k -
+    1}};
+    \bar{P_{k - 1}} \rangle}{\langle \bar{P_{k - 2}}; \bar{P_{k - 2} \rangle}}$ \\
+    gdy $\bar{P_k}$ są ortogonalne względem parzystej funkcji wagowej: 
+    $\bar{P_0} = 1, \bar{P_1} = x, \bar{P_k} = x \bar{P_{k - 1}} - d_k \bar{P_{k
+    - 2}}$
+
+    \subsection{N-ty wielomian optymalny}
+
+    $W_n^* = \sum \limits_{k = 0}^{n} \frac{\langle f; P_k \rangle}{\langle P_k; P_k \rangle} P_k$ -- takie
+    $w_n \in \Pi_n$, że $||f - w_n||_2$ -- najmniejsze \\
+
+    $||f - w_n^*|| = \sqrt{||f||^2 - \sum \limits_{k = 0}^n \frac{\langle f;
+    P_k \rangle^2}{\langle P_k; P_k \rangle}}$ \\
+
+    $n$-ty wielomian optymalny dla $x^{n + 1}$ to $x^{n + 1} - T_{n + 1}(x)
+    \cdot \frac{1}{2^n}$
+
+    \subsection{uogólniony algorytm Clenshawa}
+
+    $\{P_k\}$ -- ciąg wielomianów, \\
+    $P_0 = \alpha_0, P_1 = (\alpha_1 x - \beta_1)P_0, P_k = (\alpha_k x -
+    \beta_k)P_{k - 1} - \gamma_k P_{k - 2}$, obliczamy wartość $s_n = \sum
+    \limits_{k = 0}^{n} a_kP_k$ \\
+    $V_{n + 1} = V_{n + 2} = 0$ \\
+    dla $k = n, n - 1, \ldots, 0$ \\
+    $V_k = a_k + (\alpha_{k + 1}x - \beta_{k + 1})V_{k + 1} - \gamma_{k + 2}V_{k
+    + 2}$ \\
+    $S_n(x) = a_0V_0$    
+
+    \section{Kwadratury liniowe}
+
+    \subsection{kwadratury interpolacyjne}
+    Idea: całkujemy wielomian interpolacyjny \\
+    $A_k = \int \limits_a^b \lambda_k(x) dx$ \\
+    $h = \frac{b - a}{n}$ \\
+    błąd w złożonym wzorze Trapezów: $R_n = -(b - a) \frac{h^2}{12} f''(\xi)$ \\
+    błąd w złożonym wzorze Simpsona: $R_n = -(b - a) \frac{h^4}{180} f^4(\xi)$
+
+
+    \subsection{metoda Romberga}
+
+    $T_{m,k} = \frac{4^m T_{m - 1, k + 1} - T_{m - 1, k}}{4^m - 1}$ 
+
+    \subsection{kwadratura Gaussa-Czebyszewa}
+
+    $A_k = \frac{\pi}{n + 1}$ (zera Czebyszewa)
+
+    \subsection{kwadratura Lobbato}
+
+    $A_k = \frac{\pi}{n}$ (ekstrema Czebyszewa)
+
+    \subsection{kwadratura Gaussa}
+
+    w zerach wielomianu ortogonalnego
+
+    \subsection{kwadratura Newtona-Cotesa}
+
+    węzły równoodległe
+
+    \subsection{wielomiany Czebyszewa}
+
+    $p(x) = \frac{1}{\sqrt{1 - x^2}}$ \\
+    $\int \limits_{-1}^1 p(x)(T_k(x))^2 = \pi$ dla $k = 0$, $\frac{\pi}{2}$ w
+    przeciwnym wypadku\\
+    $\int \limits_{-1}^1 p(x)T_k(x)T_l(x) = 0, k \neq l$ \\
+    $\int \limits_{-1}^1 T_n(x) = \frac{2}{1 - n^2}$ dla $2 | n$, $=0$ w
+    przeciwnym wypadku
+
+    \section{Równania różniczkowe}
+    
+    \subsection{metoda Eulera}
+    $y_{n + 1} = y_n + h \cdot y_n'$ (jawna), $y_{n + 1} = y_n + h \cdot y_{n +
+    1}'$ (niejawna)
+
+    \subsection{metoda Cranka-Nicolsona}
+
+    $y_{n + 1} = y_n + \frac{h}{2}(y_n' + y_{n + 1}')$
+
+    \section{Algebra liniowa}
+
+    $||x||_1 = \sum \limits_{i = 1}^n |x_i|$, $||x||_2 = \sqrt{\sum \limits_{i =
+    0}^n |x_i|^2}$, $||x||_{\infty} = \max \limits_{i \le n}|x_i|$ \\
+    
+    Norma indukowana: $||A|| = \sup \limits_{x \in R^n \setminus \{0\}}
+    \frac{||Ax||}{||x||}$, $||A||_1 = \max \limits_{1 \le j \le n} \sum
+    \limits_{i = 1}^n |a_{i,j}|$ (max z kolumn)\\
+    $||A||_{\infty} = \max \limits_{1 \le i \le n}\sum \limits_{j = 1}^n |a_{i, j}|$ (max z wierszy) \\
+    $||A||_2 = \sqrt{\text{najw. wart. wł}(A^TA)}$
+
+    \subsection{Metody Iteracyjne}
+
+    $Ax = b \rightarrow x = Bx + c \rightarrow x^{k + 1} = Bx^k + c$
+
+    \begin{itemize}
+        \item Richardson $x^{k + 1} = B_{\tau}x^k + c, B_{\tau} = I - \tau A, c
+            = \tau b$
+        \item Jakobiego $A = L + D + U, x = -D^{-1}(L + U)x + D^{-1}b$
+        \item Gaussa-Seidla $x = -(L + D)^{-1}Ux + (L + D)^{-1}b$
+    \end{itemize}
+
+
+\end{multicols}
+
+\end{document}

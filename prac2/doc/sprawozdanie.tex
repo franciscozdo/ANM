@@ -1,0 +1,257 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{biblatex}
+\usepackage{amsmath, amsfonts}
+\usepackage{amsthm}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[nofoot,hdivide={1cm,*,1cm},vdivide={1cm,*,1cm}]{geometry}
+\frenchspacing
+
+% dane autora
+\author{Franciszek Zdobylak \\ \small{nr ind. 310313}}
+\title{\LARGE{Sprawozdanie} \\ \normalsize{Aproksymacja średniokwadratowa}}
+\date{\today}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definicja}
+
+\theoremstyle{theorem}
+\newtheorem*{theorem}{Twierdzenie}
+
+\begin{document}
+\maketitle
+\abstract
+W sprawozdaniu przedstawię aproksymację średniokwadratową. W testach skupie się 
+na aproksymacji wielomianów.
+
+\section{Aproksymacja wielomianowa}
+
+Zadanie aproksymacji polega na znalezieniu wielomianu optymalnego $w^*_n$ do danej
+funkcji $f$. Wielomian optymalny (n-tego stopnia) to taki dla którego zachodzi:
+$$ ||f - w^*_n|| = \inf_{w\in\Pi_n}||f - w||$$
+
+Symbol $||\cdot||$ oznacza normę. Jest to funkcja $||\cdot||: X \rightarrow 
+\mathbb{R}$, gdzie $X$ to pewna przestrzeń liniowa (nad $\mathbb R$), 
+która musi spełniać następujące aksjomaty: 
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\begin {itemize}
+\item[(N1)] $ ||f|| \ge 0$
+\item[(N2)] $ ||\alpha f|| = |\alpha|\cdot||f|| $
+\item[(N3)] $ ||f+g|| \le ||f|| + ||g|| $
+\end{itemize}
+\end{minipage}
+\end{center}
+
+Przykłady aproksymacji wielomianowej to na przykład: 
+\begin{itemize}
+  \item[] Aproksymacja jednostajna - zdefiniowana przy pomocy normy jednostajnej
+    (normy supremum) $||\cdot||_{\infty}$
+  \item[] Aproksymacja średniokwadratowa -- zdefiniowana przy pomocy normy 
+    indukowanej przez ilocznyn skalarny
+\end{itemize}
+
+\section{Aproksymacja średniokwadratowa}
+
+W aproksymacji średniokwadratowej, podstawowym pojęciem jest iloczyn skalarny.
+Jest to funkcja $ <\cdot, \cdot>: X \times X \rightarrow \mathbb R$, spełniająca:
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\begin {itemize}
+\item[(I1)] $ \langle f, f\rangle  \ge 0, \langle f, f\rangle  = 0 \iff f = 0 $
+\item[(I2)] $ \langle f, g\rangle  = \langle g, f\rangle  $
+\item[(I3)] $ \langle \alpha f, g\rangle  = \alpha\langle f, g\rangle  = \langle f, \alpha g\rangle  \\
+              \langle f_1 + f_2, g\rangle  = \langle f_1, g\rangle  + \langle f_2, g\rangle  \\
+              \langle f, g_1 + g_2\rangle  = \langle f, g_1\rangle  + \langle f, g_2\rangle $
+\end{itemize}
+\end{minipage}
+\end{center}
+
+Aproksymacja średniokwadratowa polega na znalezieniu n-tego wielomianu optymalnego
+w sensie normy średniokwadratowej zdefiniowanej w następujący sposób:
+$$ ||f||_2 = \sqrt{\langle f, f \rangle} $$
+
+Najczęściej używanymi iloczynami skalarnymi w aproksymacji średniokwadratowej jest
+iloczyn zdefiniowany przy pomocy całki:
+$$ \langle f, g \rangle = \int_a^bf(x)g(x)p(x)dx \text{\hspace{1cm}, gdzie $p(x)$
+to pewna funkcja wagowa}$$
+oraz iloczyn skalarny dyskretny:
+$$ \langle f, g \rangle = \sum_{i=1}^nf(x_i)g(x_i)p(x_i) $$
+gdzie $p(x)$ -- funkcja wagowa, a $x_1, ..., x_n$ -- pewne punkty z przedziału 
+na którym aproksymujemy funkcję.
+
+\newpage
+\section{Ortogonalność}
+Do znajdywania wielomianu optymalnego w sensie aproksymacji średniokwadratowej 
+używamy ciągu wielomianów ortogonalnych. 
+
+\begin{definition}~
+
+  Funkcje $f$ i $g$ nazywamy orogonalnymi, gdy $\langle f, g\rangle = 0$
+
+  Układ ${f_1, f_2, ...}$ nazywany ortogonalnym, gdy $\langle f_i, f_j\rangle = 0$
+  dla $i \neq j$
+\end{definition}
+
+\begin{definition}~
+
+  Ciąg ${P_k}_{k=1,2,...}$, gdzie $P_k$ jest wielomianem stopnia dokładnie $k$,
+  nazywamy ciągiem wieomianów ortogonalnych, gdy $\langle P_k, P_l\rangle = 0$ dla
+  $k \neq l$.
+\end{definition}
+
+\begin{definition}~
+
+  Wielomian $\overline{P_k}$ nazywamy wielomianem standardowym, gdy $\overline{P_k} = x^k + 
+  Q_k(x)$, gdzie $Q_k(x)$ jest wielomianem stopnia $k-1$.
+\end{definition}
+
+\begin{theorem}
+  Wielomiany ortogonalne ${\overline{P_k}}$ spełniają warunek rekurencyjny:
+  $$ \overline{P_0} = 1 \text{\hspace{1cm}} \overline{P_1} = x - c_1$$
+  $$ \overline{P_k} = (x - c_k)\overline{P_{k-1}} - d_k\overline{P_{k-2}}$$
+  $$ c_k = \frac{\langle x\overline{P_{k-1}}, \overline{P_{k-1}}\rangle}
+                {\langle \overline{P_{k-1}}, \overline{P_{k-1}}\rangle} \text{\hspace{1cm}}
+     d_k = \frac{\langle \overline{P_{k-1}}, \overline{P_{k-1}}\rangle}
+                {\langle \overline{P_{k-2}}, \overline{P_{k-2}}\rangle} $$
+\end{theorem}
+
+\begin{theorem}
+  Jeśli ciąg ${P_k}$ jest ciągiem wielomianów ortogonalnych to n-ty wielomian 
+  optymalny wyraża sie wzorem:
+  $$ w_n^* = \sum_{k=0}^n \frac{\langle f, P_k\rangle}{\langle P_k,P_k\rangle}P_k$$
+\end{theorem}
+
+\section{Konstruowanie wielomianu optymalnego}
+Podczas konstuowania wielomianów optymalnych na potrzeby doświadczeń będę
+korzystał z twierdzeń wspomnianych w poprzednim rozdziale. Tzn. skonstuuję ciąg 
+standardowych wielomianów ortogonalnych. Będę pamiętał:
+\begin{itemize}
+  \item[--] współczynniki relacji rekurencyjnej $c_k$ i $d_k$
+  \item[--] iloczyny skalarne $\langle P_k,P_k\rangle$
+  \item[--] wartości $P(x_i)$, gdzie $x_i$ -- punkty, w których liczymy iloczyn skalarny
+\end{itemize}
+
+Przy konstrukcji wielomianu optymalnego będę wyliczał współczynniki 
+$a_k = \frac{\langle f, P_k\rangle}{\langle P_k,P_k\rangle}$. Wtedy wielomian 
+optymalny będzie miał postać: $ \sum_{k=0}^na_kP_k$.
+
+Do wyliczenia wartości wielomianu w punkcie wystarczy znać wartości wielomianów
+$P_k$ w punkcie, co w prosty sposób możemy wyliczyć z zależności rekurencyjnej.
+
+\section{Opis doświadczenia}
+W moich doświadczeniach chciałem sprawdzić jak dobrze oryginalny wielomian jest 
+przybliżany przez wielomian optymalny policzony dla zaburzonych danych.
+
+
+W doświadczeniach dla losowych wielomianów o stopniach $n = 1, 2, ..., 10$ 
+konstruowałem wielomiany optymalne stopnia $k = 1, 2, ..., 2n$. Konstrukcja jest 
+oparta na iloczynie skalarnym dyskretnym liczonym w $100$ losowych punktach przedziału 
+$[-1, 1]$. W każdym z tych punktów policzyłem wartość dokładną wielomianu oraz zaburzyłem
+ją o czynnik z przedziału $[-10^{-1}, 10^{-1}]$ (w drugim teście $[-10^{-2}, 10^{-2}]$).
+W ten sposób otrzymałem dwa wielomiany stopnia k -- dokładniejszy i mniej dokładny. 
+Następnie dla dla każdego z wielomianów optymalnych liczyłem średni błąd (różnicę między 
+oryginalnym, a optymalnym wielomianem).
+
+\begin{table}[!h]
+  \begin{minipage}{.50\linewidth}
+    \begin{tabular}{c|ccc}
+      \multicolumn{4}{c}{Wielomian stopnia 5}\\
+      \hline \hline
+      Stopień &&\\
+      wielomianu & Dokł. dane & Zaburzone dane & Różnica\\
+      optymalnego &&\\
+      \hline
+1 & 1.3359e-01 & 1.3558e-01 & 1.9898e-03\\
+2 & 8.2468e-02 & 8.3564e-02 & 1.0959e-03\\
+3 & 1.4890e-02 & 1.4756e-02 & 1.3407e-04\\
+4 & 1.1408e-02 & 1.2784e-02 & 1.3766e-03\\
+5 & 4.2738e-16 & 1.1982e-02 & 1.1982e-02\\
+6 & 5.3945e-16 & 1.3387e-02 & 1.3387e-02\\
+7 & 5.4510e-16 & 1.3337e-02 & 1.3337e-02\\
+8 & 5.6015e-16 & 1.3313e-02 & 1.3313e-02\\
+9 & 6.1901e-16 & 1.5448e-02 & 1.5448e-02\\
+10 & 6.4117e-16 & 1.5211e-02 & 1.5211e-02\\
+\hline
+    \end{tabular}
+  \end{minipage}%
+  \begin{minipage}{.50\linewidth}
+    \begin{tabular}{c|ccc}
+      \multicolumn{4}{c}{Wielomian stopnia 8}\\
+      \hline \hline
+      Stopień&&\\
+      wielomianu & Dokł. dane & Zaburzone dane & Różnica\\
+      optymalnego &&\\
+      \hline
+1 & 2.0270e-01 & 2.0697e-01 & 4.2749e-03\\
+2 & 2.0500e-01 & 2.0470e-01 & 2.9797e-04\\
+3 & 2.0542e-01 & 2.0505e-01 & 3.7528e-04\\
+4 & 4.7134e-02 & 4.8454e-02 & 1.3199e-03\\
+5 & 4.7309e-02 & 5.0095e-02 & 2.7856e-03\\
+6 & 5.6457e-03 & 1.2941e-02 & 7.2952e-03\\
+7 & 3.8832e-03 & 1.2384e-02 & 8.5010e-03\\
+8 & 5.7125e-16 & 1.3044e-02 & 1.3044e-02\\
+9 & 6.3786e-16 & 1.3786e-02 & 1.3786e-02\\
+10 & 7.7591e-16 & 1.3753e-02 & 1.3753e-02\\
+\hline
+    \end{tabular}
+  \end{minipage}
+\caption{Tabele błędu między wielomianem, a wielomianem optymalnym (zaburzenia rzędu $10^{-2}$)}
+\end{table}
+
+\begin{table}[!h]
+  \begin{minipage}{.50\linewidth}
+    \begin{tabular}{c|ccc}
+      \multicolumn{4}{c}{Wielomian stopnia 5}\\
+      \hline \hline
+      Stopień &&\\
+      wielomianu & Dokł. dane & Zaburzone dane & Różnica\\
+      optymalnego &&\\
+      \hline
+1 & 2.5232e-01 & 2.5228e-01 & 3.2581e-05\\
+2 & 8.4324e-02 & 8.4292e-02 & 3.2035e-05\\
+3 & 1.2920e-02 & 1.3103e-02 & 1.8292e-04\\
+4 & 7.0644e-03 & 7.1434e-03 & 7.8946e-05\\
+5 & 2.0485e-15 & 1.2360e-03 & 1.2360e-03\\
+6 & 2.1978e-15 & 1.4856e-03 & 1.4856e-03\\
+7 & 2.0802e-15 & 1.5474e-03 & 1.5474e-03\\
+8 & 2.1841e-15 & 1.5453e-03 & 1.5453e-03\\
+9 & 3.6605e-15 & 2.0681e-03 & 2.0681e-03\\
+10 & 4.0250e-15 & 1.9599e-03 & 1.9599e-03\\
+\hline
+    \end{tabular}
+  \end{minipage}%
+  \begin{minipage}{.50\linewidth}
+    \begin{tabular}{c|ccc}
+      \multicolumn{4}{c}{Wielomian stopnia 8}\\
+      \hline \hline
+      Stopień&&\\
+      wielomianu & Dokł. dane & Zaburzone dane & Różnica\\
+      optymalnego &&\\
+      \hline
+1 & 1.1701e-01 & 1.1669e-01 & 3.1822e-04\\
+2 & 1.1889e-01 & 1.1876e-01 & 1.3113e-04\\
+3 & 6.2387e-02 & 6.2332e-02 & 5.5088e-05\\
+4 & 2.5028e-02 & 2.5182e-02 & 1.5406e-04\\
+5 & 2.3842e-02 & 2.3997e-02 & 1.5507e-04\\
+6 & 2.5572e-03 & 3.1450e-03 & 5.8776e-04\\
+7 & 1.3698e-03 & 2.4639e-03 & 1.0940e-03\\
+8 & 2.2003e-15 & 2.0592e-03 & 2.0592e-03\\
+9 & 2.5084e-15 & 2.0653e-03 & 2.0653e-03\\
+10 & 2.6487e-15 & 2.9676e-03 & 2.9676e-03\\
+\hline
+    \end{tabular}
+  \end{minipage}
+  \caption{Tabele błędu między wielomianem, a wielomianem optymalnym (zaburzenia rzędu $10^{-3}$)}
+\end{table}
+
+\section{Podsumowanie}
+Po przeprowadzonych testach można zauważyć, że wielomian optymalny dla zaburzonych
+danych nie jest dużo gorszy od wielomianu optymalnego dla dokładnych danych.
+Przybliża on oryginalny wielomian z dokładnością rzędu równego rzędowi zaburzeń.
+
+\end{document}
